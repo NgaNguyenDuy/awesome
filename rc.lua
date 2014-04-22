@@ -9,7 +9,7 @@ naughty = require("naughty")
 local lain = require("lain")
 local rd = require("rodentbane")
 local drop = require("scratchdrop")
-local empathy = require("empathy")
+local emacs_browser = require("emacs-browser")
 -- }}}
 
 -- awful.util.spawn_with_shell("xcompmgr -cF &")
@@ -82,7 +82,7 @@ local layouts = {
     awful.layout.suit.tile.top, -- 10
     awful.layout.suit.fair, -- 11
     awful.layout.suit.fair.horizontal, -- 12
-    empathy
+    emacs_browser
 }
 -- }}}
 
@@ -102,7 +102,7 @@ lain.layout.centerwork.bottom_right = 3
 -- {{{ Tag list
 tags = {
     names = { "Ƅ", "ƀ", "Ɵ", "ƈ", "Ɗ", "⌘", "☭", "⌥", "✇" },
-    layout = { layouts[5], layouts[7], layouts[13], layouts[5], layouts[1], layouts[12], layouts[9],layouts[9], layouts[9] }
+    layout = { layouts[5], layouts[7], layouts[5], layouts[13], layouts[1], layouts[12], layouts[9],layouts[9], layouts[9] }
 }
 for s = 1, screen.count() do
     tags[s] = awful.tag(tags.names, s, tags.layout)

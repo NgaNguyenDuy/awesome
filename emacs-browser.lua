@@ -12,18 +12,35 @@ local table = table
 local buddylist_height = 295
 local naughty = naughty
 
-local function do_empathy(p)
-   if #p.clients == 2 then
-      naughty.notify({
-            text = "when client equal 2",
-            title = "test",
-            fg = "#0099cc",
-            bg = "#000000",
-            ontop = false,
-            timeout = 1
-      })
+local function do_emacs(p)
+   if #p.clients <= 2 then
+      local areas = {}
+      areas.height = p.workarea.height
+      areas.width = p.workarea.width
+      areas.x = p.workarea.x
+      areas.y = p.workarea.y
+      
+      for k, c in ipairs(p.clients) do
+         if c.name == 'File Browser for Emacs Server' then
+            c:geometry ({
+                  width= 255,
+                  height= areas.height - 10,
+                  x = areas.x + 5,
+                  y = areas.y + 5,
+            })
+         else
+            if c.name == 'emacs@mozillians' or c.name == '*scratch*' or c.name == '@mozillians' then
+               c:geometry({
+                     width = areas.width - 270,
+                     height = areas.height - 10,
+                     x = areas.x + 265,
+                     y = areas.y + 5,
+               })
+            end
+         end
+      end
    end
-   if #p.clients > 0 then
+   if #p.clients > 2 then
       -- 每行最多窗口数
       local cols = 3
       local area = {}
@@ -96,12 +113,12 @@ local function do_empathy(p)
    end
 end
 
-local empathy = {}
-empathy.name = "empathy"
+local emacs_browser = {}
+emacs_browser.name = "emacs-chris"
 
 -- @param screen The screen to arrange.
-function empathy.arrange(p)
-   return do_empathy(p)
+function emacs_browser.arrange(p)
+   return do_emacs(p)
 end
 
-return empathy
+return emacs_browser
