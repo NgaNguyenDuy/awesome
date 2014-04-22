@@ -10,6 +10,7 @@ end
 
 appKeys = {
 --   e = runApp("emacs-chris"),
+   x = runApp("xterm"),
    e = runApp("emacs-chris"),
    g = runApp(graphics),
 --   m = runApp("run_alpine"),
