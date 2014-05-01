@@ -29,7 +29,7 @@ local function do_emacs(p)
                   y = areas.y + 5,
             })
          else
-            if c.name == 'emacs@mozillians' or c.name == '*scratch*' or c.name == '@mozillians' then
+            if c.name == 'emacs@mozillians' or c.name == '*scratch*' or c.name == '@mozillians' or c.name == '@mozillians.connectify' then
                c:geometry({
                      width = areas.width - 270,
                      height = areas.height - 10,

@@ -45,7 +45,7 @@ modkey      = "Mod4"
 altkey      = "Mod1"
 
 -- User defined
-terminal    = "urxvt"
+terminal    = "urxvtc"
 editor      = os.getenv("EDITOR") or "gvim"
 graphics    = "gimp"
 chris_filebrowser = "filebrowser"
@@ -67,6 +67,8 @@ beautiful.init(active_theme .. "/theme.lua")
 
 -- Custome function
 local mymodule = require "mymodule"
+
+mymodule.run_once("xcompmgr",'xcompmgr -CcfF -I "20" -O "10" -D "1" -t "-5" -l "-5" -r "4.2" -o ".82" &')
 
 -- Load layouts
 local layouts = {
@@ -451,7 +453,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Control", "Shift"   }, "q", awesome.quit),
 
-    awful.key({ modkey,	          }, "z",      function () drop(terminal) end),
+--    awful.key({ modkey,	          }, "z",      function () drop(terminal) end),
 
 
     -- Tag browsing
@@ -547,6 +549,10 @@ globalkeys = awful.util.table.join(
           awful.util.spawn( "dmenu_run -b  -nb black -nf green -p Run -fn 'Monaco-8'")
     end),
 
+    
+    -- Toggle Touchpad
+    awful.key({ }, "#199", -- Xf86touchpadtoggle
+       function () awful.util.spawn("/home/chris/.bin/switchTouchpad") end),
     
     -- Volume keyboard control
     awful.key({ }, "XF86AudioRaiseVolume",
@@ -718,10 +724,21 @@ awful.rules.rules = {
     { rule_any = { class = {"mpv", "MPlayer", "pinentry", "feh", "Vlc"} },
       properties = { floating = true } },
     -- apps tags
-    { rule = { class = "Iceweasel" },
+    { rule = { class = "Firefox" },
       properties = { tag = tags[1][2] } },
-    { rule = { class = "Thunar" },
-      properties = { tag = tags[1][4] } },
+    { rule = { class = "Viewnior" },
+      properties = { tag = tags[1][6] } },
+    { rule = { class = "Okular" },
+      properties = { tag = tags[1][7] } },
+
+    { rule = { class = "Emacs", instance = "emacs" }, 
+      properties = {tag = tags[1][4]}},
+    
+    -- { rule = { class = "Sublime Text" },
+    --   properties = { tag = tags[1][8]}  },
+    
+    { rule = { class = "Skype" },
+      properties = { tag = tags[1][5] } },
 }
 -- }}}
 
