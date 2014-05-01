@@ -61,7 +61,8 @@ confdir = home .. "/.config/awesome"
 themes = confdir .. "/themes"
 
 -- Load active themes
-active_theme = themes .. "/holo"
+--active_theme = themes .. "/holo"
+active_theme = themes .. "/solarized-powerarrow"
 beautiful.init(active_theme .. "/theme.lua")
 
 
@@ -374,7 +375,7 @@ for s = 1, screen.count() do
     -- mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.focused, mytasklist.buttons)
 
     -- Create the upper wibox
-    mywibox[s] = awful.wibox({ position = "top", height = "16", screen = s })
+    mywibox[s] = awful.wibox({ position = "top", height = "20", screen = s })
 
     -- Widgets that are aligned to the upper left
     local left_layout = wibox.layout.fixed.horizontal()
