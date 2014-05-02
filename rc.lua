@@ -61,8 +61,8 @@ confdir = home .. "/.config/awesome"
 themes = confdir .. "/themes"
 
 -- Load active themes
---active_theme = themes .. "/holo"
-active_theme = themes .. "/solarized-powerarrow"
+active_theme = themes .. "/holo"
+-- active_theme = themes .. "/solarized-powerarrow"
 beautiful.init(active_theme .. "/theme.lua")
 
 
@@ -375,7 +375,7 @@ for s = 1, screen.count() do
     -- mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.focused, mytasklist.buttons)
 
     -- Create the upper wibox
-    mywibox[s] = awful.wibox({ position = "top", height = "20", screen = s })
+    mywibox[s] = awful.wibox({ position = "top", height = "18", screen = s })
 
     -- Widgets that are aligned to the upper left
     local left_layout = wibox.layout.fixed.horizontal()
@@ -461,6 +461,11 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "Left", awful.tag.viewprev),
     awful.key({ modkey }, "Right", awful.tag.viewnext),
     awful.key({ modkey }, "Escape", awful.tag.history.restore),
+    
+    -- SCreen focus
+    
+    awful.key({modkey,            }, "F1",     function () awful.screen.focus(1) end),
+    awful.key({modkey,            }, "F2",     function () awful.screen.focus(2) end),
 
     -- Client focus
     awful.key({ modkey }, "j",
@@ -489,7 +494,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
     awful.key({ modkey, "Control" }, "n", awful.client.restore),
-    awful.key({ modkey,           }, "Tab",
+    awful.key({ altkey,           }, "Tab",
         function ()
             awful.client.focus.history.previous()
             if client.focus then
@@ -739,7 +744,7 @@ awful.rules.rules = {
     --   properties = { tag = tags[1][8]}  },
     
     { rule = { class = "Skype" },
-      properties = { tag = tags[1][5] } },
+      properties = { tag = tags[1][6] } },
 }
 -- }}}
 
