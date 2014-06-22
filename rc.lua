@@ -732,6 +732,8 @@ awful.rules.rules = {
     -- apps tags
     { rule = { class = "Firefox" },
       properties = { tag = tags[1][2] } },
+    { rule = { class = "Chromium-browser" },
+      properties = { tag = tags[1][3] } },
     { rule = { class = "Viewnior" },
       properties = { tag = tags[1][6] } },
     { rule = { class = "Okular" },

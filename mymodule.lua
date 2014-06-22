@@ -25,6 +25,7 @@ appKeys = {
    b = runApp(chris_filebrowser),
 --   n = runApp("nautilus"),
    f = runApp("firefox -no-remote"),
+   F = runApp("firefox -private"),
    c = runApp("chromium"),
    o = runApp("libreoffice"),
    a = runApp("gnome-alsamixer"),
