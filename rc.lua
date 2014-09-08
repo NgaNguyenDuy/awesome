@@ -45,7 +45,7 @@ modkey      = "Mod4"
 altkey      = "Mod1"
 
 -- User defined
-terminal    = "urxvtc"
+terminal    = "urxvt"
 editor      = os.getenv("EDITOR") or "gvim"
 graphics    = "gimp"
 chris_filebrowser = "filebrowser"
@@ -62,14 +62,18 @@ themes = confdir .. "/themes"
 
 -- Load active themes
 active_theme = themes .. "/holo"
--- active_theme = themes .. "/solarized-powerarrow"
+--active_theme = themes .. "/solarized-powerarrow"
 beautiful.init(active_theme .. "/theme.lua")
+
+local pomodoro = require("pomodoro")
+
+pomodoro.init()
 
 
 -- Custome function
 local mymodule = require "mymodule"
 
-mymodule.run_once("xcompmgr",'xcompmgr -CcfF -I "20" -O "10" -D "1" -t "-5" -l "-5" -r "4.2" -o ".82" &')
+-- mymodule.run_once("xcompmgr",'xcompmgr -CcfF -I "20" -O "10" -D "1" -t "-5" -l "-5" -r "4.2" -o ".82" &')
 
 -- Load layouts
 local layouts = {
@@ -105,7 +109,7 @@ lain.layout.centerwork.bottom_right = 3
 -- {{{ Tag list
 tags = {
     names = { "Ƅ", "ƀ", "Ɵ", "ƈ", "Ɗ", "⌘", "☭", "⌥", "✇" },
-    layout = { layouts[5], layouts[7], layouts[5], layouts[13], layouts[1], layouts[12], layouts[9],layouts[9], layouts[9] }
+    layout = { layouts[5], layouts[7], layouts[5], layouts[13], layouts[7], layouts[12], layouts[9],layouts[9], layouts[9] }
 }
 for s = 1, screen.count() do
     tags[s] = awful.tag(tags.names, s, tags.layout)
@@ -170,12 +174,13 @@ yellow  = "#F0C674"
 red     = "#FF6C5C"
 green   = "#B7CE42"
 
+
 -- Textclock
 clockicon = wibox.widget.imagebox(beautiful.widget_clock)
 mytextclock = awful.widget.textclock(markup(white, space2 .. "%I:%M %p" .. space2))
 
 -- Calendar
-lain.widgets.calendar:attach(mytextclock, { font_size = 8 })
+lain.widgets.calendar:attach(mytextclock, { font_size = 9 })
 
 -- Volume
 volicon = wibox.widget.imagebox(beautiful.widget_vol)
@@ -283,7 +288,7 @@ mpdwidget = lain.widgets.mpd({
     settings = function()
         mpd_notification_preset = {
             title = "Now playing",
-            timeout = 6,
+            timeout = 3,
             text = string.format("%s - %s\n%s", mpd_now.artist,
                    mpd_now.album, mpd_now.title)
         }
@@ -406,6 +411,7 @@ for s = 1, screen.count() do
         right_layout:add(volumewidget)
         right_layout:add(clockicon)
         right_layout:add(mytextclock)
+
         right_layout:add(wibox.widget.systray())
     end
 
@@ -426,6 +432,12 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the bottom right
     bottom_right_layout = wibox.layout.fixed.horizontal()
     bottom_right_layout:add(mypromptbox[s])
+    
+    bottom_right_layout:add(pomodoro.icon_widget)
+    
+    bottom_right_layout:add(pomodoro.widget)
+
+
     bottom_right_layout:add(mylayoutbox[s])
 
     -- Now bring it all together (with the tasklit in the middle)
@@ -466,6 +478,10 @@ globalkeys = awful.util.table.join(
     
     awful.key({modkey,            }, "F1",     function () awful.screen.focus(1) end),
     awful.key({modkey,            }, "F2",     function () awful.screen.focus(2) end),
+    
+    -- Move client to screen 2
+    awful.key({ modkey, "Shift"   }, "F1", function (c) awful.client.movetoscreen(c, 1) end),
+    awful.key({ modkey, "Shift"   }, "F2", function (c) awful.client.movetoscreen(c, 2) end),
 
     -- Client focus
     awful.key({ modkey }, "j",
@@ -628,7 +644,7 @@ globalkeys = awful.util.table.join(
     -- Printscreens
     awful.key({ }, "#107",
     function ()
-        awful.util.spawn("scrot -d 1 -e 'mv $f /home/chris/Pictures/Screenhosts/ 2>/dev/null'")
+        awful.util.spawn("scrot -d 1 -e 'mv $f /home/chris/Pictures/Screenhosts/post 2>/dev/null'")
     end)
 )
 
@@ -732,15 +748,22 @@ awful.rules.rules = {
     -- apps tags
     { rule = { class = "Firefox" },
       properties = { tag = tags[1][2] } },
+    
+    { rule = { class = "Nautilus" },
+      properties = { tag = tags[1][5] } },
+    
     { rule = { class = "Chromium-browser" },
       properties = { tag = tags[1][3] } },
     { rule = { class = "Viewnior" },
       properties = { tag = tags[1][6] } },
     { rule = { class = "Okular" },
       properties = { tag = tags[1][7] } },
+    
+    { rule = { class = "Gvim" },
+      properties = { tag = tags[1][5] } },
 
-    { rule = { class = "Emacs", instance = "emacs" }, 
-      properties = {tag = tags[1][4]}},
+    -- { rule = { class = "Emacs", instance = "emacs" }, 
+    --   properties = {tag = tags[1][4]}},
     
     -- { rule = { class = "Sublime Text" },
     --   properties = { tag = tags[1][8]}  },
